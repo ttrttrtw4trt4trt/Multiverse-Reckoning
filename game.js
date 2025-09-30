@@ -1,6 +1,9 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const menu = document.getElementById('menu');
+const startButton = document.getElementById('startButton');
+
 const squareSize = 80;
 const speed = 4;
 const floorHeight = 50;
@@ -16,11 +19,11 @@ let onGround = false;
 
 const keysPressed = {};
 
-// Resize and adjust canvas size and square position
+let gameStarted = false; // Flag to control game state
+
 function resizeCanvas() {
-  // If fullscreen, use fullscreen element size, else use window size
-  const width = document.fullscreenElement ? window.screen.width : window.innerWidth;
-  const height = document.fullscreenElement ? window.screen.height : window.innerHeight;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   canvasWidth = width;
   canvasHeight = height;
@@ -32,49 +35,39 @@ function resizeCanvas() {
 }
 
 window.addEventListener('resize', resizeCanvas);
-document.addEventListener('fullscreenchange', resizeCanvas);
 resizeCanvas();
 
 document.addEventListener('keydown', (event) => {
+  if (!gameStarted) return; // Ignore keys if game not started
   const key = event.key.toLowerCase();
   keysPressed[key] = true;
-
   if (key === 'w' && onGround) {
     velocityY = -jumpStrength;
     onGround = false;
   }
-
-  // Toggle fullscreen when 'f' pressed
-  if (key === 'f') {
-    toggleFullscreen();
-  }
 });
 
 document.addEventListener('keyup', (event) => {
+  if (!gameStarted) return; // Ignore keys if game not started
   keysPressed[event.key.toLowerCase()] = false;
 });
 
-function toggleFullscreen() {
-  if (!document.fullscreenElement) {
-    if (canvas.requestFullscreen) {
-      canvas.requestFullscreen();
-    } else if (canvas.webkitRequestFullscreen) { // Safari
-      canvas.webkitRequestFullscreen();
-    } else if (canvas.msRequestFullscreen) { // IE/Edge
-      canvas.msRequestFullscreen();
-    }
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) { // Safari
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { // IE/Edge
-      document.msExitFullscreen();
-    }
-  }
-}
+startButton.addEventListener('click', () => {
+  menu.style.display = 'none';
+  gameStarted = true;
+  // Reset position in case player restarts later
+  squareX = 100;
+  squareY = canvasHeight - floorHeight - squareSize;
+  velocityY = 0;
+  onGround = false;
+  keysPressed['a'] = false;
+  keysPressed['d'] = false;
+  keysPressed['w'] = false;
+});
 
 function updatePosition() {
+  if (!gameStarted) return;
+
   if (keysPressed['a']) {
     squareX = Math.max(0, squareX - speed);
   }
@@ -96,11 +89,15 @@ function updatePosition() {
 function draw() {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
+  // Draw floor
   ctx.fillStyle = 'green';
   ctx.fillRect(0, canvasHeight - floorHeight, canvasWidth, floorHeight);
 
-  ctx.fillStyle = 'blue';
-  ctx.fillRect(squareX, squareY, squareSize, squareSize);
+  // Draw square if game started
+  if (gameStarted) {
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(squareX, squareY, squareSize, squareSize);
+  }
 }
 
 function gameLoop() {
