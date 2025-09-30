@@ -9,24 +9,24 @@ const speed = 10;
 
 // Draw the square at its current position
 function drawSquare() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
   ctx.fillStyle = 'blue';
   ctx.fillRect(squareX, squareY, squareSize, squareSize);
 }
 
-// Listen for keyboard events
+// Listen for WASD keyboard events only
 document.addEventListener('keydown', function (event) {
-  switch (event.key) {
-    case 'ArrowUp':
+  switch (event.key.toLowerCase()) {
+    case 'w':
       squareY = Math.max(0, squareY - speed);
       break;
-    case 'ArrowDown':
+    case 's':
       squareY = Math.min(canvas.height - squareSize, squareY + speed);
       break;
-    case 'ArrowLeft':
+    case 'a':
       squareX = Math.max(0, squareX - speed);
       break;
-    case 'ArrowRight':
+    case 'd':
       squareX = Math.min(canvas.width - squareSize, squareX + speed);
       break;
   }
