@@ -9,7 +9,7 @@ const speed = 10;
 
 // Draw the square at its current position
 function drawSquare() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'blue';
   ctx.fillRect(squareX, squareY, squareSize, squareSize);
 }
