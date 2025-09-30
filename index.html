@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fullscreen Game</title>
+  <title>Game with Menu</title>
   <style>
     html, body {
       margin: 0;
       height: 100%;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
     canvas {
       display: block;
@@ -15,21 +16,44 @@
       width: 100vw;
       height: 100vh;
     }
-    #fullscreenHint {
+    /* Menu overlay styles */
+    #menu {
       position: fixed;
-      top: 10px;
-      left: 10px;
-      font-family: Arial, sans-serif;
-      background: rgba(0,0,0,0.5);
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
       color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    #menu h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    #startButton {
+      padding: 15px 30px;
+      font-size: 1.5em;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #startButton:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
-  <div id="fullscreenHint">Press 'F' to toggle fullscreen</div>
+  <div id="menu">
+    <h1>Welcome to the Game!</h1>
+    <button id="startButton">Start Game</button>
+  </div>
   <canvas id="gameCanvas"></canvas>
   <script src="game.js"></script>
 </body>
