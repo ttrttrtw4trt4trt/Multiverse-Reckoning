@@ -4,8 +4,8 @@ const ctx = canvas.getContext('2d');
 // Square properties
 const squareSize = 80;
 const speed = 4;
-let squareX = 100;
-let squareY = 100;
+let squareX = -100;
+let squareY = -100;
 
 // Track pressed keys
 const keysPressed = {};
