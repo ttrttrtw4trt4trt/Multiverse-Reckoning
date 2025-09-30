@@ -2,9 +2,9 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Square properties
-let squareX = 50;
-let squareY = 50;
 const squareSize = 80;
+let squareX = 0;
+let squareY = canvas.height - squareSize;
 const speed = 4;
 
 // Track pressed keys
