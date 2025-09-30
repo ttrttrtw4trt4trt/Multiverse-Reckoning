@@ -4,17 +4,22 @@
   <meta charset="UTF-8" />
   <title>Full Screen Game</title>
   <style>
-    /* Remove default margins and fill full screen */
-    body, html {
+    /* Make body and html fill the entire viewport */
+    html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden; /* prevent scrollbars */
       height: 100%;
-      width: 100%;
+      overflow: hidden; /* Prevent scrolling */
     }
+    /* Make canvas fill entire viewport */
     canvas {
       display: block;
-      background: #f0f0f0; /* light background color */
+      position: fixed; /* Fix canvas so it fills viewport and doesn't scroll */
+      top: 0;
+      left: 0;
+      width: 100vw;   /* CSS width 100% viewport width */
+      height: 100vh;  /* CSS height 100% viewport height */
+      background: #f0f0f0;
     }
   </style>
 </head>
