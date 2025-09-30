@@ -5,33 +5,49 @@ const ctx = canvas.getContext('2d');
 let squareX = 50;
 let squareY = 50;
 const squareSize = 80;
-const speed = 10;
+const speed = 4;
+
+// Track pressed keys
+const keysPressed = {};
 
 // Draw the square at its current position
 function drawSquare() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'blue';
   ctx.fillRect(squareX, squareY, squareSize, squareSize);
 }
 
-// Listen for WASD keyboard events only
-document.addEventListener('keydown', function (event) {
-  switch (event.key.toLowerCase()) {
-    case 'w':
-      squareY = Math.max(0, squareY - speed);
-      break;
-    case 's':
-      squareY = Math.min(canvas.height - squareSize, squareY + speed);
-      break;
-    case 'a':
-      squareX = Math.max(0, squareX - speed);
-      break;
-    case 'd':
-      squareX = Math.min(canvas.width - squareSize, squareX + speed);
-      break;
+// Update position based on pressed keys
+function updateSquare() {
+  if (keysPressed['w']) {
+    squareY = Math.max(0, squareY - speed);
   }
+  if (keysPressed['s']) {
+    squareY = Math.min(canvas.height - squareSize, squareY + speed);
+  }
+  if (keysPressed['a']) {
+    squareX = Math.max(0, squareX - speed);
+  }
+  if (keysPressed['d']) {
+    squareX = Math.min(canvas.width - squareSize, squareX + speed);
+  }
+}
+
+// Game loop for smooth movement
+function gameLoop() {
+  updateSquare();
   drawSquare();
+  requestAnimationFrame(gameLoop);
+}
+
+// Listen for WASD keydown/keyup events
+document.addEventListener('keydown', function (event) {
+  keysPressed[event.key.toLowerCase()] = true;
 });
 
-// Initial draw
-drawSquare();
+document.addEventListener('keyup', function (event) {
+  keysPressed[event.key.toLowerCase()] = false;
+});
+
+// Start the game loop
+gameLoop();
