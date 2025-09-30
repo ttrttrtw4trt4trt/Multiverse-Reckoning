@@ -10,59 +10,59 @@ const floorHeight = 50;
 const gravity = 0.5;
 const jumpStrength = 12;
 
-let canvasWidth, canvasHeight;
+let canvasWidth;
+let canvasHeight;
 
 let squareX = 100;
-let squareY = 0; // will be set on resize
+let squareY = 0;
 let velocityY = 0;
 let onGround = false;
 
 const keysPressed = {};
 
-let gameStarted = false; // Flag to control game state
+let gameStarted = false;
 
 function resizeCanvas() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  canvasWidth = width;
-  canvasHeight = height;
+  canvasWidth = window.innerWidth;
+  canvasHeight = window.innerHeight;
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
 
-  squareY = canvasHeight - floorHeight - squareSize;
-  squareX = Math.min(squareX, canvasWidth - squareSize);
+  // Position square on floor if game started
+  if (gameStarted) {
+    squareY = canvasHeight - floorHeight - squareSize;
+    squareX = Math.min(squareX, canvasWidth - squareSize);
+  }
 }
 
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+
+startButton.addEventListener('click', () => {
+  menu.style.display = 'none';
+  gameStarted = true;
+  squareY = canvasHeight - floorHeight - squareSize;
+  velocityY = 0;
+  onGround = false;
+
+  // Reset keys pressed
+  for (let key in keysPressed) {
+    keysPressed[key] = false;
+  }
+});
 
 document.addEventListener('keydown', (event) => {
-  if (!gameStarted) return; // Ignore keys if game not started
-  const key = event.key.toLowerCase();
-  keysPressed[key] = true;
-  if (key === 'w' && onGround) {
+  if (!gameStarted) return;
+  keysPressed[event.key.toLowerCase()] = true;
+
+  if (event.key.toLowerCase() === 'w' && onGround) {
     velocityY = -jumpStrength;
     onGround = false;
   }
 });
 
 document.addEventListener('keyup', (event) => {
-  if (!gameStarted) return; // Ignore keys if game not started
+  if (!gameStarted) return;
   keysPressed[event.key.toLowerCase()] = false;
-});
-
-startButton.addEventListener('click', () => {
-  menu.style.display = 'none';
-  gameStarted = true;
-  // Reset position in case player restarts later
-  squareX = 100;
-  squareY = canvasHeight - floorHeight - squareSize;
-  velocityY = 0;
-  onGround = false;
-  keysPressed['a'] = false;
-  keysPressed['d'] = false;
-  keysPressed['w'] = false;
 });
 
 function updatePosition() {
@@ -93,7 +93,6 @@ function draw() {
   ctx.fillStyle = 'green';
   ctx.fillRect(0, canvasHeight - floorHeight, canvasWidth, floorHeight);
 
-  // Draw square if game started
   if (gameStarted) {
     ctx.fillStyle = 'blue';
     ctx.fillRect(squareX, squareY, squareSize, squareSize);
@@ -106,4 +105,5 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
+resizeCanvas();
 gameLoop();
