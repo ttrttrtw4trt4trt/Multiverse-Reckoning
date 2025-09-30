@@ -7,27 +7,24 @@ const floorHeight = 50;
 const gravity = 0.5;
 const jumpStrength = 12;
 
-let canvasWidth = window.innerWidth;
-let canvasHeight = window.innerHeight;
+let canvasWidth, canvasHeight;
 
 let squareX = 100;
-let squareY = 0; // will be set at start to floor level
+let squareY = 0; // will be set after resize
 let velocityY = 0;
 let onGround = false;
 
 const keysPressed = {};
 
-// Resize the canvas to fit window
 function resizeCanvas() {
+  // Set canvas internal drawing size to match CSS size
   canvasWidth = window.innerWidth;
   canvasHeight = window.innerHeight;
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
 
-  // Reset square on top of floor after resize
+  // Position square on top of floor after resize
   squareY = canvasHeight - floorHeight - squareSize;
-
-  // Prevent square from going out of bounds
   squareX = Math.min(squareX, canvasWidth - squareSize);
 }
 
@@ -36,7 +33,6 @@ resizeCanvas();
 
 document.addEventListener('keydown', (event) => {
   keysPressed[event.key.toLowerCase()] = true;
-
   if (event.key.toLowerCase() === 'w' && onGround) {
     velocityY = -jumpStrength;
     onGround = false;
@@ -85,4 +81,3 @@ function gameLoop() {
 }
 
 gameLoop();
-
