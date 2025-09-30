@@ -2,10 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Square on Floor</title>
+  <title>Full Screen Game</title>
+  <style>
+    /* Remove default margins and fill full screen */
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* prevent scrollbars */
+      height: 100%;
+      width: 100%;
+    }
+    canvas {
+      display: block;
+      background: #f0f0f0; /* light background color */
+    }
+  </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="400"></canvas>
+  <canvas id="gameCanvas"></canvas>
   <script src="game.js"></script>
 </body>
 </html>
