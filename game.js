@@ -3,9 +3,11 @@ const ctx = canvas.getContext('2d');
 
 // Square properties
 const squareSize = 80;
+const speed = 4;
+
+// Set square position AFTER getting canvas height!
 let squareX = 0;
 let squareY = canvas.height - squareSize;
-const speed = 4;
 
 // Track pressed keys
 const keysPressed = {};
