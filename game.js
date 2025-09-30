@@ -7,48 +7,49 @@ const speed = 4;
 let squareX = 100;
 let squareY = 100;
 
-// Object to track which keys are currently pressed
 const keysPressed = {};
 
-// Listen for keydown events - mark key as pressed
 document.addEventListener('keydown', (event) => {
   keysPressed[event.key.toLowerCase()] = true;
 });
 
-// Listen for keyup events - mark key as not pressed
 document.addEventListener('keyup', (event) => {
   keysPressed[event.key.toLowerCase()] = false;
 });
 
-// Update the square’s position based on which keys are pressed
 function updatePosition() {
-  if (keysPressed['w']) {
-    squareY = Math.max(0, squareY - speed);
+  let dx = 0;
+  let dy = 0;
+
+  if (keysPressed['w']) dy -= 1;
+  if (keysPressed['s']) dy += 1;
+  if (keysPressed['a']) dx -= 1;
+  if (keysPressed['d']) dx += 1;
+
+  if (dx !== 0 && dy !== 0) {
+    dx *= Math.SQRT1_2; 
+    dy *= Math.SQRT1_2;
   }
-  if (keysPressed['a']) {
-    squareX = Math.max(0, squareX - speed);
-  }
-  if (keysPressed['s']) {
-    squareY = Math.min(canvas.height - squareSize, squareY + speed);
-  }
-  if (keysPressed['d']) {
-    squareX = Math.min(canvas.width - squareSize, squareX + speed);
-  }
+
+  squareX = Math.min(Math.max(0, squareX + dx * speed), canvas.width - squareSize);
+  squareY = Math.min(Math.max(0, squareY + dy * speed), canvas.height - squareSize);
 }
 
-// Draw the square
 function drawSquare() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'blue';
   ctx.fillRect(squareX, squareY, squareSize, squareSize);
 }
 
-// Game loop: update position and redraw repeatedly
 function gameLoop() {
   updatePosition();
   drawSquare();
   requestAnimationFrame(gameLoop);
 }
 
-// Start the game loop
 gameLoop();
+
+
+
+
+
