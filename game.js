@@ -5,7 +5,11 @@ const ctx = canvas.getContext('2d');
 const squareSize = 80;
 const speed = 4;
 let squareX = 100;
-let squareY = 100;
+let floorHeight = 50;  // height of the floor
+let squareY = canvas.height - floorHeight - squareSize;  // start on top of the floor
+
+// Floor properties
+const floorY = canvas.height - floorHeight;
 
 const keysPressed = {};
 
@@ -18,25 +22,22 @@ document.addEventListener('keyup', (event) => {
 });
 
 function updatePosition() {
-  let dx = 0;
-  let dy = 0;
-
-  if (keysPressed['w']) dy -= 1;
-  if (keysPressed['s']) dy += 1;
-  if (keysPressed['a']) dx -= 1;
-  if (keysPressed['d']) dx += 1;
-
-  if (dx !== 0 && dy !== 0) {
-    dx *= Math.SQRT1_2; 
-    dy *= Math.SQRT1_2;
+  if (keysPressed['a']) {
+    squareX = Math.max(0, squareX - speed);
   }
-
-  squareX = Math.min(Math.max(0, squareX + dx * speed), canvas.width - squareSize);
-  squareY = Math.min(Math.max(0, squareY + dy * speed), canvas.height - squareSize);
+  if (keysPressed['d']) {
+    squareX = Math.min(canvas.width - squareSize, squareX + speed);
+  }
 }
 
 function drawSquare() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Draw floor
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, floorY, canvas.width, floorHeight);
+  
+  // Draw square
   ctx.fillStyle = 'blue';
   ctx.fillRect(squareX, squareY, squareSize, squareSize);
 }
@@ -48,6 +49,7 @@ function gameLoop() {
 }
 
 gameLoop();
+
 
 
 
