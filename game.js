@@ -4,3 +4,40 @@ const ctx = canvas.getContext('2d');
 // Draw a blue square
 ctx.fillStyle = 'blue';
 ctx.fillRect(50, 50, 80, 80);
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Square properties
+let squareX = 50;
+let squareY = 50;
+const squareSize = 80;
+const speed = 10;
+
+// Draw the square at its current position
+function drawSquare() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  ctx.fillStyle = 'blue';
+  ctx.fillRect(squareX, squareY, squareSize, squareSize);
+}
+
+// Listen for keyboard events
+document.addEventListener('keydown', function (event) {
+  switch (event.key) {
+    case 'ArrowUp':
+      squareY = Math.max(0, squareY - speed);
+      break;
+    case 'ArrowDown':
+      squareY = Math.min(canvas.height - squareSize, squareY + speed);
+      break;
+    case 'ArrowLeft':
+      squareX = Math.max(0, squareX - speed);
+      break;
+    case 'ArrowRight':
+      squareX = Math.min(canvas.width - squareSize, squareX + speed);
+      break;
+  }
+  drawSquare();
+});
+
+// Initial draw
+drawSquare();
