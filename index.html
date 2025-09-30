@@ -6,23 +6,17 @@
   <style>
     html, body {
       margin: 0;
+      padding: 0;
       height: 100%;
       overflow: hidden;
       font-family: Arial, sans-serif;
     }
-    canvas {
-      display: block;
-      background: #f0f0f0;
-      width: 100vw;
-      height: 100vh;
-    }
-    /* Menu overlay styles */
     #menu {
       position: fixed;
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.8);
       color: white;
       display: flex;
       flex-direction: column;
@@ -33,6 +27,7 @@
     #menu h1 {
       font-size: 3em;
       margin-bottom: 20px;
+      text-align: center;
     }
     #startButton {
       padding: 15px 30px;
@@ -46,6 +41,12 @@
     }
     #startButton:hover {
       background-color: #45a049;
+    }
+    canvas {
+      display: block;
+      background: #f0f0f0;
+      width: 100vw;
+      height: 100vh;
     }
   </style>
 </head>
