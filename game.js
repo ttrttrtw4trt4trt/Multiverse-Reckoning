@@ -15,7 +15,7 @@ function drawSquare() {
 }
 
 // Listen for WASD keyboard events only
-document.addEventListener('S', function (event) {
+document.addEventListener('keydown', function (event) {
   switch (event.key.toLowerCase()) {
     case 'w':
       squareY = Math.max(0, squareY - speed);
