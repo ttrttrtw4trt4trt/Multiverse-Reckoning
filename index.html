@@ -2,28 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Full Screen Game</title>
+  <title>Fullscreen Game</title>
   <style>
-    /* Make body and html fill the entire viewport */
     html, body {
       margin: 0;
-      padding: 0;
       height: 100%;
-      overflow: hidden; /* Prevent scrolling */
+      overflow: hidden;
     }
-    /* Make canvas fill entire viewport */
     canvas {
       display: block;
-      position: fixed; /* Fix canvas so it fills viewport and doesn't scroll */
-      top: 0;
-      left: 0;
-      width: 100vw;   /* CSS width 100% viewport width */
-      height: 100vh;  /* CSS height 100% viewport height */
       background: #f0f0f0;
+      width: 100vw;
+      height: 100vh;
+    }
+    #fullscreenHint {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-family: Arial, sans-serif;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      user-select: none;
     }
   </style>
 </head>
 <body>
+  <div id="fullscreenHint">Press 'F' to toggle fullscreen</div>
   <canvas id="gameCanvas"></canvas>
   <script src="game.js"></script>
 </body>
